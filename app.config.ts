@@ -15,7 +15,7 @@ const VARIANT_MAP = {
   },
   staging: {
     name: `${PROJECT} - STAGING`,
-    scheme: `${PROJECT}development`,
+    scheme: `${PROJECT}staging`,
   },
   production: {
     name: PROJECT,
@@ -23,7 +23,7 @@ const VARIANT_MAP = {
   },
 } as const;
 
-const variant = (process.env.APP_ENV as Environment) || 'development';
+const variant = (process.env.APP_ENV as Environment) ?? 'development';
 
 const { name, scheme } = VARIANT_MAP[variant];
 
@@ -53,9 +53,11 @@ const config: ExpoConfig = {
   newArchEnabled: true,
   assetBundlePatterns: ['**/*'],
   ios: {
+    bundleIdentifier: packageIdentifier,
     supportsTablet: true,
   },
   android: {
+    package: packageIdentifier,
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#ffffff',
